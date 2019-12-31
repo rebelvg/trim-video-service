@@ -1,0 +1,51 @@
+{
+  "name": "trim-video",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "license": "MIT",
+  "scripts": {
+    "lint": "prettier --list-different \"**/*.{ts,js,json,css,md}\"",
+    "lint:fix": "prettier --write \"**/*.{ts,js,json,css,md}\"",
+    "test": "mocha",
+    "api:start": "ts-node api/index.ts",
+    "worker:start": "ts-node worker/index.ts"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "joi": "^14.3.0",
+    "koa": "^2.6.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-qs": "^2.0.0",
+    "koa-router": "^7.4.0",
+    "lodash": "^4.17.11",
+    "mongodb": "^3.1.10",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/chai": "^4.2.7",
+    "@types/faker": "^4.1.8",
+    "@types/fluent-ffmpeg": "^2.1.13",
+    "@types/joi": "^14.0.1",
+    "@types/koa": "^2.0.48",
+    "@types/koa-bodyparser": "^4.2.1",
+    "@types/koa-qs": "^2.0.0",
+    "@types/koa-router": "^7.0.37",
+    "@types/lodash": "^4.14.119",
+    "@types/mocha": "^5.2.7",
+    "@types/mongodb": "^3.1.18",
+    "@types/node": "^12.12.21",
+    "@types/sinon": "^7.5.1",
+    "@types/supertest": "^2.0.8",
+    "@types/uuid": "^3.4.6",
+    "chai": "^4.2.0",
+    "faker": "^4.1.0",
+    "mocha": "^6.2.2",
+    "prettier": "^1.19.1",
+    "sinon": "^7.5.0",
+    "supertest": "^4.0.2",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.4"
+  }
+}
