@@ -1,0 +1,121 @@
+swagger: '2.0'
+info:
+  title: 'Trim-Video Service'
+  version: '1.0.0'
+host: 'localhost:8000'
+basePath: '/v1'
+schemes:
+  - http
+paths:
+  '/trim-tasks':
+    post:
+      parameters:
+        - in: 'body'
+          name: 'body'
+          required: true
+          schema:
+            $ref: '#/definitions/TrimTaskCreate'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Bad Request'
+    get:
+      parameters:
+        - in: 'body'
+          name: 'body'
+          required: true
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/TrimTaskResponse'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Bad Request'
+  '/trim-tasks/${taskId}/upload-video':
+    put:
+      consumes:
+        - 'multipart/form-data'
+      parameters:
+        - name: 'taskId'
+          in: 'path'
+          required: true
+          type: 'string'
+        - name: 'video_file'
+          in: 'formData'
+          required: true
+          type: 'file'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Bad Request'
+        404:
+          description: 'Not Found'
+  '/trim-tasks/${taskId}/restart':
+    put:
+      parameters:
+        - name: 'taskId'
+          in: 'path'
+          required: true
+          type: 'string'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Bad Request'
+        404:
+          description: 'Not Found'
+  '/trim-tasks/${taskId}':
+    get:
+      parameters:
+        - name: 'taskId'
+          in: 'path'
+          required: true
+          type: 'string'
+      responses:
+        '200':
+          description: 'OK'
+        400:
+          description: 'Bad Request'
+        404:
+          description: 'Not Found'
+  '/users':
+    post:
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Bad Request'
+
+definitions:
+  TrimTaskCreate:
+    type: 'object'
+    properties:
+      startTime:
+        type: 'number'
+      endTime:
+        type: 'number'
+  TrimTaskResponse:
+    type: 'object'
+    properties:
+      startTime:
+        type: 'number'
+      endTime:
+        type: 'number'
+      userId:
+        type: 'string'
+      status:
+        type: 'string'
+      filePath:
+        type: 'string'
+      processedFilePath:
+        type: 'string'
+      processingError:
+        type: 'string'
+      duration:
+        type: 'number'
+      link:
+        type: 'string'
