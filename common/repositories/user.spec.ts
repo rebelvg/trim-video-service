@@ -16,13 +16,13 @@ describe('UserRepository integration test', () => {
       createdRecordId = await userRepository.create();
 
       foundRecord = await userRepository['collection'].findOne({
-        _id: createdRecordId
+        _id: createdRecordId,
       });
     });
 
     after(async () => {
       await userRepository['collection'].deleteMany({
-        _id: createdRecordId
+        _id: createdRecordId,
       });
     });
 
@@ -39,17 +39,17 @@ describe('UserRepository integration test', () => {
       token = faker.random.uuid();
 
       await userRepository['collection'].insertOne({
-        token
+        token,
       });
 
       foundRecord = await userRepository.findOne({
-        token
+        token,
       });
     });
 
     after(async () => {
       await userRepository['collection'].deleteMany({
-        token
+        token,
       });
     });
 

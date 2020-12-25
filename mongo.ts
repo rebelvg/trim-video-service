@@ -1,6 +1,6 @@
 import { MongoClient, Db } from 'mongodb';
 
-import { config } from './config';
+import { DATABASE } from './config';
 
 let mongoClientDb: Db;
 
@@ -15,7 +15,7 @@ async function getMongoClient(): Promise<MongoClient> {
         }
 
         return resolve(client);
-      }
+      },
     );
   });
 }
@@ -27,7 +27,7 @@ export async function getMongoDb(): Promise<Db> {
 
   const mongoClient = await getMongoClient();
 
-  mongoClientDb = mongoClient.db(config.db.name);
+  mongoClientDb = mongoClient.db(DATABASE.NAME);
 
   return mongoClientDb;
 }

@@ -5,7 +5,7 @@ import * as fs from 'fs';
 import { trimTaskRepository } from '../repositories/trim-task';
 import { TrimTaskStatusEnum, ITrimTask } from '../models/trim-task';
 import { NotFound, BadRequest } from '../../api/errors';
-import { config } from '../../config';
+import { API } from '../../config';
 
 export const UPLOAD_FOLDER = 'uploads';
 
@@ -28,17 +28,17 @@ class TrimTaskService {
       status: TrimTaskStatusEnum.CREATED,
       filePath: null,
       processedFilePath: null,
-      processingError: null
+      processingError: null,
     });
 
     return trimTaskRepository.findOne({
-      _id: trimTaskId
+      _id: trimTaskId,
     });
   }
 
   public async findByUserId(userId: ObjectID): Promise<ITrimTask[]> {
     const trimTasks = await trimTaskRepository.find({
-      userId
+      userId,
     });
 
     return Promise.all(
@@ -46,16 +46,21 @@ class TrimTaskService {
         return {
           ...trimTask,
           duration: trimTask.endTime - trimTask.startTime,
-          link: `http://${config.server.host}:${config.server.port}/v1/trim-task/${trimTask._id.toHexString()}`
+          link: `${
+            API.EXTERNAL_URL
+          }/v1/trim-task/${trimTask._id.toHexString()}`,
         };
-      })
+      }),
     );
   }
 
-  public async getVideoFile(taskId: string, userId: ObjectID): Promise<Readable> {
+  public async getVideoFile(
+    taskId: string,
+    userId: ObjectID,
+  ): Promise<Readable> {
     const trimTask = await trimTaskRepository.findOne({
       _id: new ObjectID(taskId),
-      userId
+      userId,
     });
 
     if (!trimTask) {
@@ -72,25 +77,25 @@ class TrimTaskService {
   public async findNextTasks(limit: number) {
     return trimTaskRepository.find(
       {
-        status: TrimTaskStatusEnum.READY
+        status: TrimTaskStatusEnum.READY,
       },
-      limit
+      limit,
     );
   }
 
   public async setStatus(taskId: ObjectID, data: Partial<ITrimTask>) {
     return trimTaskRepository.updateOne(
       {
-        _id: taskId
+        _id: taskId,
       },
-      data
+      data,
     );
   }
 
   public async restartTask(taskId: string, userId: ObjectID) {
     const trimTask = await trimTaskRepository.findOne({
       _id: new ObjectID(taskId),
-      userId
+      userId,
     });
 
     if (!trimTask) {
@@ -103,18 +108,22 @@ class TrimTaskService {
 
     await trimTaskRepository.updateOne(
       {
-        _id: new ObjectID(taskId)
+        _id: new ObjectID(taskId),
       },
       {
-        status: TrimTaskStatusEnum.READY
-      }
+        status: TrimTaskStatusEnum.READY,
+      },
     );
   }
 
-  public async uploadFile(taskId: string, userId: ObjectID, readStream: Readable) {
+  public async uploadFile(
+    taskId: string,
+    userId: ObjectID,
+    readStream: Readable,
+  ) {
     const trimTask = await trimTaskRepository.findOne({
       _id: new ObjectID(taskId),
-      userId
+      userId,
     });
 
     if (!trimTask) {
@@ -129,16 +138,19 @@ class TrimTaskService {
 
     await trimTaskRepository.updateOne(
       {
-        _id: new ObjectID(taskId)
+        _id: new ObjectID(taskId),
       },
       {
         filePath,
-        status: TrimTaskStatusEnum.READY
-      }
+        status: TrimTaskStatusEnum.READY,
+      },
     );
   }
 
-  public async storeFile(taskId: string, readStream: Readable): Promise<string> {
+  public async storeFile(
+    taskId: string,
+    readStream: Readable,
+  ): Promise<string> {
     const filePath = `${UPLOAD_FOLDER}/trim_task_${taskId}_${Date.now()}`;
 
     const writeStream = fs.createWriteStream(filePath);

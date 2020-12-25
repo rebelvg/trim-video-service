@@ -14,7 +14,7 @@ class TrimVideoWorker {
 
   public async processTask(trimTask: ITrimTask) {
     await trimTaskService.setStatus(trimTask._id, {
-      status: TrimTaskStatusEnum.IN_PROGRESS
+      status: TrimTaskStatusEnum.IN_PROGRESS,
     });
 
     let outputFilePath;
@@ -24,7 +24,7 @@ class TrimVideoWorker {
     } catch (error) {
       await trimTaskService.setStatus(trimTask._id, {
         status: TrimTaskStatusEnum.FAILED,
-        processingError: error.message
+        processingError: error.message,
       });
 
       return;
@@ -32,7 +32,7 @@ class TrimVideoWorker {
 
     await trimTaskService.setStatus(trimTask._id, {
       status: TrimTaskStatusEnum.COMPLETED,
-      processedFilePath: outputFilePath
+      processedFilePath: outputFilePath,
     });
   }
 

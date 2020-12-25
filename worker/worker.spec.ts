@@ -25,11 +25,11 @@ describe('TrimVideoWorker unit test', () => {
 
       findNextTasksResult = Array.from(
         {
-          length: 10
+          length: 10,
         },
         () => {
           return faker.random.uuid();
-        }
+        },
       );
 
       findNextTasksStub.resolves(findNextTasksResult);
@@ -76,7 +76,7 @@ describe('TrimVideoWorker unit test', () => {
 
       before(async () => {
         trimTask = {
-          _id: new ObjectID()
+          _id: new ObjectID(),
         };
 
         trimVideoStub.rejects();
@@ -96,12 +96,12 @@ describe('TrimVideoWorker unit test', () => {
         assert.isTrue(setStatusStub.calledTwice);
 
         sinon.assert.calledWithExactly(setStatusStub, trimTask._id, {
-          status: TrimTaskStatusEnum.IN_PROGRESS
+          status: TrimTaskStatusEnum.IN_PROGRESS,
         });
 
         sinon.assert.calledWithExactly(setStatusStub, trimTask._id, {
           status: TrimTaskStatusEnum.FAILED,
-          processingError: 'Error'
+          processingError: 'Error',
         });
       });
     });
@@ -112,7 +112,7 @@ describe('TrimVideoWorker unit test', () => {
 
       before(async () => {
         trimTask = {
-          _id: new ObjectID()
+          _id: new ObjectID(),
         };
 
         trimVideoResult = faker.random.uuid();
@@ -134,12 +134,12 @@ describe('TrimVideoWorker unit test', () => {
         assert.isTrue(setStatusStub.calledTwice);
 
         sinon.assert.calledWithExactly(setStatusStub, trimTask._id, {
-          status: TrimTaskStatusEnum.IN_PROGRESS
+          status: TrimTaskStatusEnum.IN_PROGRESS,
         });
 
         sinon.assert.calledWithExactly(setStatusStub, trimTask._id, {
           status: TrimTaskStatusEnum.COMPLETED,
-          processedFilePath: trimVideoResult
+          processedFilePath: trimVideoResult,
         });
       });
     });
@@ -155,7 +155,7 @@ describe('TrimVideoWorker unit test', () => {
         _id: new ObjectID(),
         startTime: 0,
         endTime: 0,
-        filePath: 'test.flv'
+        filePath: 'test.flv',
       };
 
       actualResult = await trimTaskWorker.trimVideo(trimTask);

@@ -12,64 +12,72 @@ trimTasks.post(
   async (ctx: Router.IRouterContext, next) => {
     const {
       request: { body },
-      state: { user }
+      state: { user },
     } = ctx;
 
     const task = await trimTaskService.create({
       ...body,
-      userId: user._id
+      userId: user._id,
     });
 
     ctx.body = {
-      taskId: task._id
+      taskId: task._id,
     };
-  }
+  },
 );
 
-trimTasks.put('/:id/upload-video', isLoggedIn, async (ctx: Router.IRouterContext, next) => {
-  const {
-    params: { id: taskId },
-    state: { user }
-  } = ctx;
+trimTasks.put(
+  '/:id/upload-video',
+  isLoggedIn,
+  async (ctx: Router.IRouterContext, next) => {
+    const {
+      params: { id: taskId },
+      state: { user },
+    } = ctx;
 
-  await trimTaskService.uploadFile(taskId, user._id, ctx.req);
+    await trimTaskService.uploadFile(taskId, user._id, ctx.req);
 
-  ctx.status = 204;
-});
+    ctx.status = 204;
+  },
+);
 
 trimTasks.get('/', isLoggedIn, async (ctx: Router.IRouterContext, next) => {
   const {
-    state: { user }
+    state: { user },
   } = ctx;
 
   const trimTasks = await trimTaskService.findByUserId(user._id);
 
   ctx.body = {
-    tasks: trimTasks
+    tasks: trimTasks,
   };
 });
 
-trimTasks.put('/:id/restart', isLoggedIn, async (ctx: Router.IRouterContext, next) => {
-  const {
-    params: { id: taskId },
-    state: { user }
-  } = ctx;
+trimTasks.put(
+  '/:id/restart',
+  isLoggedIn,
+  async (ctx: Router.IRouterContext, next) => {
+    const {
+      params: { id: taskId },
+      state: { user },
+    } = ctx;
 
-  await trimTaskService.restartTask(taskId, user._id);
+    await trimTaskService.restartTask(taskId, user._id);
 
-  ctx.status = 204;
-});
+    ctx.status = 204;
+  },
+);
 
 trimTasks.get('/:id', isLoggedIn, async (ctx: Router.IRouterContext, next) => {
   const {
     params: { id: taskId },
-    state: { user }
+    state: { user },
   } = ctx;
 
   const trimmedVideoFile = await trimTaskService.getVideoFile(taskId, user._id);
 
   ctx.set({
-    'Content-Type': 'video/mp4'
+    'Content-Type': 'video/mp4',
   });
 
   ctx.body = trimmedVideoFile;

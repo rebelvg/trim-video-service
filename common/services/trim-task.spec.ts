@@ -29,7 +29,7 @@ describe('TrimTaskService unit test', () => {
       params = {
         startTime: faker.random.uuid(),
         endTime: faker.random.uuid(),
-        userId: new ObjectID()
+        userId: new ObjectID(),
       };
 
       createResult = faker.random.uuid();
@@ -51,7 +51,7 @@ describe('TrimTaskService unit test', () => {
         status: TrimTaskStatusEnum.CREATED,
         filePath: null,
         processedFilePath: null,
-        processingError: null
+        processingError: null,
       });
     });
 
@@ -59,7 +59,7 @@ describe('TrimTaskService unit test', () => {
       assert.isTrue(findOneStub.calledOnce);
 
       sinon.assert.calledWithExactly(findOneStub, {
-        _id: createResult
+        _id: createResult,
       });
     });
   });
@@ -73,18 +73,26 @@ describe('TrimTaskService unit test', () => {
 
     let userId;
 
+    let actualResult;
+
     before(async () => {
       sandbox = sinon.createSandbox();
 
       findStub = sandbox.stub(trimTaskRepository, 'find');
 
-      findResult = [];
+      findResult = [
+        {
+          _id: new ObjectID(),
+          startTime: 0,
+          endTime: 0,
+        },
+      ];
 
       findStub.resolves(findResult);
 
       userId = faker.random.uuid();
 
-      await trimTaskService.findByUserId(userId);
+      actualResult = await trimTaskService.findByUserId(userId);
     });
 
     after(() => {
@@ -95,8 +103,16 @@ describe('TrimTaskService unit test', () => {
       assert.isTrue(findStub.calledOnce);
 
       sinon.assert.calledWithExactly(findStub, {
-        userId
+        userId,
       });
+    });
+
+    it('should return expected result', () => {
+      const expectedResult = {
+        ...findResult[0],
+      };
+
+      assert.include(actualResult[0], expectedResult);
     });
   });
 
@@ -139,7 +155,7 @@ describe('TrimTaskService unit test', () => {
 
         sinon.assert.calledWith(findOneStub, {
           _id: new ObjectID(taskId),
-          userId
+          userId,
         });
       });
 
@@ -170,7 +186,7 @@ describe('TrimTaskService unit test', () => {
 
         sinon.assert.calledWith(findOneStub, {
           _id: new ObjectID(taskId),
-          userId
+          userId,
         });
       });
 
@@ -184,7 +200,7 @@ describe('TrimTaskService unit test', () => {
 
       before(async () => {
         findOneResult = {
-          status: TrimTaskStatusEnum.FAILED
+          status: TrimTaskStatusEnum.FAILED,
         };
 
         findOneStub.resolves(findOneResult);
@@ -201,7 +217,7 @@ describe('TrimTaskService unit test', () => {
 
         sinon.assert.calledWith(findOneStub, {
           _id: new ObjectID(taskId),
-          userId
+          userId,
         });
       });
 
@@ -211,11 +227,11 @@ describe('TrimTaskService unit test', () => {
         sinon.assert.calledWithExactly(
           updateOneStub,
           {
-            _id: new ObjectID(taskId)
+            _id: new ObjectID(taskId),
           },
           {
-            status: TrimTaskStatusEnum.READY
-          }
+            status: TrimTaskStatusEnum.READY,
+          },
         );
       });
     });
@@ -264,7 +280,7 @@ describe('TrimTaskService unit test', () => {
 
         sinon.assert.calledWithExactly(findOneStub, {
           _id: new ObjectID(taskId),
-          userId
+          userId,
         });
       });
 
@@ -282,7 +298,7 @@ describe('TrimTaskService unit test', () => {
 
       before(async () => {
         findOneResult = {
-          filePath: faker.random.uuid()
+          filePath: faker.random.uuid(),
         };
 
         findOneStub.resolves(findOneResult);
@@ -301,7 +317,7 @@ describe('TrimTaskService unit test', () => {
 
         sinon.assert.calledWithExactly(findOneStub, {
           _id: new ObjectID(taskId),
-          userId
+          userId,
         });
       });
 
@@ -341,7 +357,7 @@ describe('TrimTaskService unit test', () => {
 
         sinon.assert.calledWithExactly(findOneStub, {
           _id: new ObjectID(taskId),
-          userId
+          userId,
         });
       });
 
@@ -357,12 +373,12 @@ describe('TrimTaskService unit test', () => {
         sinon.assert.calledWithExactly(
           updateOneStub,
           {
-            _id: new ObjectID(taskId)
+            _id: new ObjectID(taskId),
           },
           {
             filePath: storeFileResult,
-            status: TrimTaskStatusEnum.READY
-          }
+            status: TrimTaskStatusEnum.READY,
+          },
         );
       });
     });
@@ -392,7 +408,7 @@ describe('TrimTaskService unit test', () => {
           if (eventName === 'end') {
             cb();
           }
-        }
+        },
       };
 
       createWriteStreamStub = sandbox.stub(fs, 'createWriteStream');
@@ -446,9 +462,9 @@ describe('TrimTaskService unit test', () => {
       sinon.assert.calledWithExactly(
         findStub,
         {
-          status: TrimTaskStatusEnum.READY
+          status: TrimTaskStatusEnum.READY,
         },
-        limit
+        limit,
       );
     });
   });
@@ -482,11 +498,11 @@ describe('TrimTaskService unit test', () => {
       sinon.assert.calledWithExactly(
         updateOneStub,
         {
-          _id: taskId
+          _id: taskId,
         },
         {
-          status
-        }
+          status,
+        },
       );
     });
   });
@@ -530,7 +546,7 @@ describe('TrimTaskService unit test', () => {
 
         sinon.assert.calledWithExactly(findOneStub, {
           _id: new ObjectID(taskId),
-          userId
+          userId,
         });
       });
 
@@ -560,7 +576,7 @@ describe('TrimTaskService unit test', () => {
 
         sinon.assert.calledWithExactly(findOneStub, {
           _id: new ObjectID(taskId),
-          userId
+          userId,
         });
       });
 
@@ -574,7 +590,7 @@ describe('TrimTaskService unit test', () => {
 
       before(async () => {
         findOneResult = {
-          processedFilePath: faker.random.uuid()
+          processedFilePath: faker.random.uuid(),
         };
         findOneStub.resolves(findOneResult);
 
@@ -590,14 +606,17 @@ describe('TrimTaskService unit test', () => {
 
         sinon.assert.calledWithExactly(findOneStub, {
           _id: new ObjectID(taskId),
-          userId
+          userId,
         });
       });
 
       it('should call createReadStream once', () => {
         assert.isTrue(createReadStreamStub.calledOnce);
 
-        sinon.assert.calledWithExactly(createReadStreamStub, findOneResult.processedFilePath);
+        sinon.assert.calledWithExactly(
+          createReadStreamStub,
+          findOneResult.processedFilePath,
+        );
       });
     });
   });

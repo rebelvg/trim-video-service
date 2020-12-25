@@ -3,7 +3,7 @@ import * as bodyParser from 'koa-bodyparser';
 import * as Router from 'koa-router';
 import * as koaQs from 'koa-qs';
 
-import { routerV1 } from './routes/v1';
+import { router_v1 } from './routes/v1';
 import { readToken } from './middleware/read-token';
 
 export const app = new Koa();
@@ -26,7 +26,7 @@ app.use(async (ctx, next) => {
 
 const router = new Router();
 
-router.use('/v1', routerV1.routes());
+router.use('/v1', router_v1.routes());
 
 app.use(router.routes());
 

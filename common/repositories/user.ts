@@ -23,7 +23,7 @@ class UserRepository {
     await this.connect();
 
     const result = await this.collection.insertOne({
-      token: uuid()
+      token: uuid(),
     });
 
     return result.insertedId;

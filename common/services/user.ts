@@ -6,7 +6,7 @@ class UserService {
     const userId = await userRepository.create();
 
     return userRepository.findOne({
-      _id: userId
+      _id: userId,
     });
   }
 

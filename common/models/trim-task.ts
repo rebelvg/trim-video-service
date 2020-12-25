@@ -5,7 +5,7 @@ export enum TrimTaskStatusEnum {
   READY = 'ready',
   IN_PROGRESS = 'in_progress',
   COMPLETED = 'completed',
-  FAILED = 'failed'
+  FAILED = 'failed',
 }
 
 export interface ITrimTask {

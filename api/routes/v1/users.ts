@@ -7,6 +7,6 @@ users.post('/', async (ctx: Router.RouterContext, next) => {
   const user = await userService.create();
 
   ctx.body = {
-    token: user.token
+    token: user.token,
   };
 });

@@ -6,13 +6,13 @@ import { BadRequest } from '../../../errors';
 
 export const postSchema = Joi.object({
   startTime: Joi.number().required(),
-  endTime: Joi.number().required()
+  endTime: Joi.number().required(),
 }).required();
 
 export function validationMiddleware(schema: JoiObject, path: string) {
   return (ctx, next) => {
     const { error } = Joi.validate(_.get(ctx, path), schema, {
-      abortEarly: false
+      abortEarly: false,
     });
 
     if (!error) {

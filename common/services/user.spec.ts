@@ -39,7 +39,7 @@ describe('UserService unit test', () => {
       assert.isTrue(findOneStub.calledOnce);
 
       sinon.assert.calledWithExactly(findOneStub, {
-        _id: createResult
+        _id: createResult,
       });
     });
   });
@@ -69,7 +69,7 @@ describe('UserService unit test', () => {
       assert.isTrue(findOneStub.calledOnce);
 
       sinon.assert.calledWithExactly(findOneStub, {
-        token
+        token,
       });
     });
   });

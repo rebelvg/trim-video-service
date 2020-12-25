@@ -1,9 +1,7 @@
-export const config = {
-  db: {
-    name: 'trim_video'
-  },
-  server: {
-    host: 'localhost',
-    port: 8000
-  }
+export const DATABASE = {
+  NAME: 'trim_video',
+};
+
+export const API = {
+  PORT: 8000,
 };

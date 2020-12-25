@@ -1,9 +1,9 @@
-import Router = require('koa-router');
+import * as Router from 'koa-router';
 
 import { users } from './users';
 import { trimTasks } from './trim-task';
 
-export const routerV1 = new Router();
+export const router_v1 = new Router();
 
-routerV1.use('/users', users.routes());
-routerV1.use('/trim-tasks', trimTasks.routes());
+router_v1.use('/users', users.routes());
+router_v1.use('/trim-tasks', trimTasks.routes());

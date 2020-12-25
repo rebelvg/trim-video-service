@@ -33,7 +33,10 @@ class TrimTaskRepository {
     return this.collection.findOne(params);
   }
 
-  public async find(params: Partial<ITrimTask>, limit: number = 0): Promise<ITrimTask[]> {
+  public async find(
+    params: Partial<ITrimTask>,
+    limit: number = 0,
+  ): Promise<ITrimTask[]> {
     await this.connect();
 
     return this.collection
@@ -46,7 +49,7 @@ class TrimTaskRepository {
     await this.connect();
 
     await this.collection.updateOne(params, {
-      $set: data
+      $set: data,
     });
   }
 }

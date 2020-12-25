@@ -22,17 +22,17 @@ describe('TrimTaskRepository integration test', () => {
         status: TrimTaskStatusEnum.CREATED,
         filePath: null,
         processedFilePath: null,
-        processingError: null
+        processingError: null,
       });
 
       foundRecord = await trimTaskRepository['collection'].findOne({
-        _id: createdRecordId
+        _id: createdRecordId,
       });
     });
 
     after(async () => {
       await trimTaskRepository['collection'].deleteMany({
-        _id: createdRecordId
+        _id: createdRecordId,
       });
     });
 
@@ -55,17 +55,17 @@ describe('TrimTaskRepository integration test', () => {
         status: TrimTaskStatusEnum.CREATED,
         filePath: null,
         processedFilePath: null,
-        processingError: null
+        processingError: null,
       });
 
       foundRecord = await trimTaskRepository.findOne({
-        userId
+        userId,
       });
     });
 
     after(async () => {
       await trimTaskRepository['collection'].deleteMany({
-        userId
+        userId,
       });
     });
 
@@ -88,7 +88,7 @@ describe('TrimTaskRepository integration test', () => {
         status: TrimTaskStatusEnum.CREATED,
         filePath: null,
         processedFilePath: null,
-        processingError: null
+        processingError: null,
       });
 
       await trimTaskRepository['collection'].insertOne({
@@ -98,17 +98,17 @@ describe('TrimTaskRepository integration test', () => {
         status: TrimTaskStatusEnum.CREATED,
         filePath: null,
         processedFilePath: null,
-        processingError: null
+        processingError: null,
       });
 
       foundRecords = await trimTaskRepository.find({
-        userId
+        userId,
       });
     });
 
     after(async () => {
       await trimTaskRepository['collection'].deleteMany({
-        userId
+        userId,
       });
     });
 
@@ -133,26 +133,26 @@ describe('TrimTaskRepository integration test', () => {
         status: TrimTaskStatusEnum.CREATED,
         filePath: null,
         processedFilePath: null,
-        processingError: null
+        processingError: null,
       });
 
       await trimTaskRepository.updateOne(
         {
-          userId
+          userId,
         },
         {
-          status
-        }
+          status,
+        },
       );
 
       foundRecord = await trimTaskRepository['collection'].findOne({
-        userId
+        userId,
       });
     });
 
     after(async () => {
       await trimTaskRepository['collection'].deleteMany({
-        userId
+        userId,
       });
     });
 
