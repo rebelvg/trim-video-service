@@ -5,7 +5,7 @@ import { DATABASE } from './config';
 let mongoClientDb: Db;
 
 async function getMongoClient(): Promise<MongoClient> {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     MongoClient.connect(
       'mongodb://localhost/',
       { useNewUrlParser: true, useUnifiedTopology: true },

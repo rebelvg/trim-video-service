@@ -30,6 +30,6 @@ router.use('/v1', router_v1.routes());
 
 app.use(router.routes());
 
-app.use(ctx => {
+app.use((ctx) => {
   ctx.throw(404, 'Not Found.');
 });

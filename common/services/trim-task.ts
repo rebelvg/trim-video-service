@@ -42,7 +42,7 @@ class TrimTaskService {
     });
 
     return Promise.all(
-      trimTasks.map(trimTask => {
+      trimTasks.map((trimTask) => {
         return {
           ...trimTask,
           duration: trimTask.endTime - trimTask.startTime,

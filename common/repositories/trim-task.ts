@@ -39,10 +39,7 @@ class TrimTaskRepository {
   ): Promise<ITrimTask[]> {
     await this.connect();
 
-    return this.collection
-      .find(params)
-      .limit(limit)
-      .toArray();
+    return this.collection.find(params).limit(limit).toArray();
   }
 
   public async updateOne(params: Partial<ITrimTask>, data: Partial<ITrimTask>) {

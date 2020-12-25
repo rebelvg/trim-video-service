@@ -9,7 +9,7 @@ class TrimVideoWorker {
   public async processTasks() {
     const trimTasks = await trimTaskService.findNextTasks(10);
 
-    await Promise.all(trimTasks.map(trimTask => this.processTask(trimTask)));
+    await Promise.all(trimTasks.map((trimTask) => this.processTask(trimTask)));
   }
 
   public async processTask(trimTask: ITrimTask) {
